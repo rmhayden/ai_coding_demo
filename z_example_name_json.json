@@ -1,0 +1,46 @@
+
+[{
+    "name": "rob", 
+    "age": 35,
+    "male": true,
+    "weightKg": 70,
+    "sodiumValues": [
+        {
+            "sodiumValue": 150,
+            "dateTimeStamp": "01/01/2026 00:01:00"
+        },
+        {
+            "sodiumValue": 155,
+            "dateTimeStamp": "01/01/2026 00:03:00"
+        },
+         {
+            "sodiumValue": 150,
+            "dateTimeStamp": "01/01/2026 00:05:00"
+         }
+    ],
+    "waterGiven": [
+        {
+            "waterGivenCC": 500,
+            "dateTimeStamp": "01/01/2026 00:01:00"
+        },
+        {
+            "waterGivenCC": 900,
+            "dateTimeStamp": "01/01/2026 00:03:00"
+        }
+    ] 
+
+},
+{
+    "name": "hayden",
+    "age": 55,
+    "male": true,
+    "weightKg": 80,
+    "sodiumValues" :[
+        {
+            "sodiumValue": 165,
+            "dateTimeStamp": "01/05/2026 00:01:00"
+        }
+
+    ]
+
+}]

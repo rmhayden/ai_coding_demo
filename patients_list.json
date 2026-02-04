@@ -1,0 +1,389 @@
+[
+    {
+      "name": "Patient 1",
+      "age": 34,
+      "male": true,
+      "weightKg": 72,
+      "sodiumValues": [
+        { "sodiumValue": 156, "dateTimeStamp": "2026-02-01T06:30" },
+        { "sodiumValue": 155, "dateTimeStamp": "2026-02-01T09:15" },
+        { "sodiumValue": 153, "dateTimeStamp": "2026-02-01T12:00" },
+        { "sodiumValue": 154, "dateTimeStamp": "2026-02-01T15:10" },
+        { "sodiumValue": 152, "dateTimeStamp": "2026-02-01T18:05" },
+        { "sodiumValue": 150, "dateTimeStamp": "2026-02-01T21:20" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-01T07:05" },
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-01T13:40" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-01T19:30" }
+      ]
+    },
+    {
+      "name": "Patient 2",
+      "age": 58,
+      "male": false,
+      "weightKg": 64,
+      "sodiumValues": [
+        { "sodiumValue": 158, "dateTimeStamp": "2026-02-02T05:50" },
+        { "sodiumValue": 157, "dateTimeStamp": "2026-02-02T08:30" },
+        { "sodiumValue": 155, "dateTimeStamp": "2026-02-02T11:10" },
+        { "sodiumValue": 154, "dateTimeStamp": "2026-02-02T14:00" },
+        { "sodiumValue": 153, "dateTimeStamp": "2026-02-02T17:25" },
+        { "sodiumValue": 151, "dateTimeStamp": "2026-02-02T20:10" },
+        { "sodiumValue": 150, "dateTimeStamp": "2026-02-02T22:40" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-02T06:20" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-02T12:45" }
+      ]
+    },
+    {
+      "name": "Patient 3",
+      "age": 71,
+      "male": true,
+      "weightKg": 80,
+      "sodiumValues": [
+        { "sodiumValue": 152, "dateTimeStamp": "2026-02-03T06:10" },
+        { "sodiumValue": 151, "dateTimeStamp": "2026-02-03T08:55" },
+        { "sodiumValue": 149, "dateTimeStamp": "2026-02-03T11:30" },
+        { "sodiumValue": 150, "dateTimeStamp": "2026-02-03T14:05" },
+        { "sodiumValue": 148, "dateTimeStamp": "2026-02-03T16:50" },
+        { "sodiumValue": 146, "dateTimeStamp": "2026-02-03T19:25" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-03T07:00" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-03T10:15" },
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-03T15:40" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-03T18:10" }
+      ]
+    },
+    {
+      "name": "Patient 4",
+      "age": 46,
+      "male": false,
+      "weightKg": 59,
+      "sodiumValues": [
+        { "sodiumValue": 150, "dateTimeStamp": "2026-02-04T07:00" },
+        { "sodiumValue": 149, "dateTimeStamp": "2026-02-04T09:20" },
+        { "sodiumValue": 148, "dateTimeStamp": "2026-02-04T12:10" },
+        { "sodiumValue": 147, "dateTimeStamp": "2026-02-04T14:55" },
+        { "sodiumValue": 146, "dateTimeStamp": "2026-02-04T18:00" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 300, "dateTimeStamp": "2026-02-04T08:05" }
+      ]
+    },
+    {
+      "name": "Patient 5",
+      "age": 63,
+      "male": true,
+      "weightKg": 92,
+      "sodiumValues": [
+        { "sodiumValue": 160, "dateTimeStamp": "2026-02-05T05:40" },
+        { "sodiumValue": 158, "dateTimeStamp": "2026-02-05T08:10" },
+        { "sodiumValue": 157, "dateTimeStamp": "2026-02-05T10:45" },
+        { "sodiumValue": 155, "dateTimeStamp": "2026-02-05T13:30" },
+        { "sodiumValue": 154, "dateTimeStamp": "2026-02-05T16:15" },
+        { "sodiumValue": 153, "dateTimeStamp": "2026-02-05T19:05" },
+        { "sodiumValue": 151, "dateTimeStamp": "2026-02-05T22:10" },
+        { "sodiumValue": 150, "dateTimeStamp": "2026-02-05T23:55" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-05T06:25" },
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-05T11:20" },
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-05T17:10" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-05T21:00" }
+      ]
+    },
+    {
+      "name": "Patient 6",
+      "age": 52,
+      "male": false,
+      "weightKg": 68,
+      "sodiumValues": [
+        { "sodiumValue": 155, "dateTimeStamp": "2026-02-06T06:15" },
+        { "sodiumValue": 154, "dateTimeStamp": "2026-02-06T08:45" },
+        { "sodiumValue": 153, "dateTimeStamp": "2026-02-06T11:05" },
+        { "sodiumValue": 151, "dateTimeStamp": "2026-02-06T13:40" },
+        { "sodiumValue": 152, "dateTimeStamp": "2026-02-06T16:20" },
+        { "sodiumValue": 150, "dateTimeStamp": "2026-02-06T19:00" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-06T07:10" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-06T12:30" }
+      ]
+    },
+    {
+      "name": "Patient 7",
+      "age": 29,
+      "male": true,
+      "weightKg": 75,
+      "sodiumValues": [
+        { "sodiumValue": 147, "dateTimeStamp": "2026-02-07T06:00" },
+        { "sodiumValue": 146, "dateTimeStamp": "2026-02-07T08:30" },
+        { "sodiumValue": 145, "dateTimeStamp": "2026-02-07T11:00" },
+        { "sodiumValue": 146, "dateTimeStamp": "2026-02-07T13:30" },
+        { "sodiumValue": 144, "dateTimeStamp": "2026-02-07T16:00" },
+        { "sodiumValue": 143, "dateTimeStamp": "2026-02-07T18:40" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-07T09:10" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-07T14:40" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-07T18:20" }
+      ]
+    },
+    {
+      "name": "Patient 8",
+      "age": 67,
+      "male": false,
+      "weightKg": 61,
+      "sodiumValues": [
+        { "sodiumValue": 154, "dateTimeStamp": "2026-02-08T05:55" },
+        { "sodiumValue": 153, "dateTimeStamp": "2026-02-08T08:25" },
+        { "sodiumValue": 151, "dateTimeStamp": "2026-02-08T10:50" },
+        { "sodiumValue": 152, "dateTimeStamp": "2026-02-08T13:20" },
+        { "sodiumValue": 150, "dateTimeStamp": "2026-02-08T15:45" },
+        { "sodiumValue": 149, "dateTimeStamp": "2026-02-08T18:15" },
+        { "sodiumValue": 147, "dateTimeStamp": "2026-02-08T20:35" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-08T06:30" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-08T12:05" },
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-08T17:30" }
+      ]
+    },
+    {
+      "name": "Patient 9",
+      "age": 41,
+      "male": true,
+      "weightKg": 88,
+      "sodiumValues": [
+        { "sodiumValue": 159, "dateTimeStamp": "2026-02-09T06:20" },
+        { "sodiumValue": 158, "dateTimeStamp": "2026-02-09T09:05" },
+        { "sodiumValue": 156, "dateTimeStamp": "2026-02-09T11:40" },
+        { "sodiumValue": 155, "dateTimeStamp": "2026-02-09T14:15" },
+        { "sodiumValue": 154, "dateTimeStamp": "2026-02-09T16:55" },
+        { "sodiumValue": 152, "dateTimeStamp": "2026-02-09T19:30" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-09T07:10" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-09T15:05" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-09T20:10" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-09T22:00" }
+      ]
+    },
+    {
+      "name": "Patient 10",
+      "age": 76,
+      "male": false,
+      "weightKg": 54,
+      "sodiumValues": [
+        { "sodiumValue": 148, "dateTimeStamp": "2026-02-10T05:30" },
+        { "sodiumValue": 147, "dateTimeStamp": "2026-02-10T08:00" },
+        { "sodiumValue": 146, "dateTimeStamp": "2026-02-10T10:30" },
+        { "sodiumValue": 144, "dateTimeStamp": "2026-02-10T13:15" },
+        { "sodiumValue": 145, "dateTimeStamp": "2026-02-10T16:00" },
+        { "sodiumValue": 143, "dateTimeStamp": "2026-02-10T18:30" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-10T06:10" },
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-10T11:40" }
+      ]
+    },
+    {
+      "name": "Patient 11",
+      "age": 50,
+      "male": true,
+      "weightKg": 95,
+      "sodiumValues": [
+        { "sodiumValue": 157, "dateTimeStamp": "2026-02-11T06:10" },
+        { "sodiumValue": 156, "dateTimeStamp": "2026-02-11T08:40" },
+        { "sodiumValue": 154, "dateTimeStamp": "2026-02-11T11:05" },
+        { "sodiumValue": 153, "dateTimeStamp": "2026-02-11T13:45" },
+        { "sodiumValue": 152, "dateTimeStamp": "2026-02-11T16:30" },
+        { "sodiumValue": 150, "dateTimeStamp": "2026-02-11T19:10" },
+        { "sodiumValue": 149, "dateTimeStamp": "2026-02-11T21:55" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-11T07:00" },
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-11T14:20" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-11T18:40" }
+      ]
+    },
+    {
+      "name": "Patient 12",
+      "age": 38,
+      "male": false,
+      "weightKg": 66,
+      "sodiumValues": [
+        { "sodiumValue": 146, "dateTimeStamp": "2026-02-12T06:25" },
+        { "sodiumValue": 145, "dateTimeStamp": "2026-02-12T08:55" },
+        { "sodiumValue": 144, "dateTimeStamp": "2026-02-12T11:15" },
+        { "sodiumValue": 145, "dateTimeStamp": "2026-02-12T13:50" },
+        { "sodiumValue": 143, "dateTimeStamp": "2026-02-12T16:30" },
+        { "sodiumValue": 142, "dateTimeStamp": "2026-02-12T19:05" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-12T07:10" }
+      ]
+    },
+    {
+      "name": "Patient 13",
+      "age": 62,
+      "male": true,
+      "weightKg": 84,
+      "sodiumValues": [
+        { "sodiumValue": 153, "dateTimeStamp": "2026-02-13T05:45" },
+        { "sodiumValue": 152, "dateTimeStamp": "2026-02-13T08:15" },
+        { "sodiumValue": 151, "dateTimeStamp": "2026-02-13T10:50" },
+        { "sodiumValue": 149, "dateTimeStamp": "2026-02-13T13:20" },
+        { "sodiumValue": 150, "dateTimeStamp": "2026-02-13T16:00" },
+        { "sodiumValue": 148, "dateTimeStamp": "2026-02-13T18:45" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-13T06:30" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-13T12:10" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-13T17:40" }
+      ]
+    },
+    {
+      "name": "Patient 14",
+      "age": 47,
+      "male": false,
+      "weightKg": 73,
+      "sodiumValues": [
+        { "sodiumValue": 158, "dateTimeStamp": "2026-02-14T06:35" },
+        { "sodiumValue": 157, "dateTimeStamp": "2026-02-14T09:10" },
+        { "sodiumValue": 156, "dateTimeStamp": "2026-02-14T11:45" },
+        { "sodiumValue": 154, "dateTimeStamp": "2026-02-14T14:30" },
+        { "sodiumValue": 155, "dateTimeStamp": "2026-02-14T17:05" },
+        { "sodiumValue": 153, "dateTimeStamp": "2026-02-14T20:00" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-14T07:20" },
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-14T12:55" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-14T18:30" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-14T21:10" }
+      ]
+    },
+    {
+      "name": "Patient 15",
+      "age": 69,
+      "male": true,
+      "weightKg": 78,
+      "sodiumValues": [
+        { "sodiumValue": 151, "dateTimeStamp": "2026-02-15T05:35" },
+        { "sodiumValue": 150, "dateTimeStamp": "2026-02-15T08:00" },
+        { "sodiumValue": 149, "dateTimeStamp": "2026-02-15T10:35" },
+        { "sodiumValue": 147, "dateTimeStamp": "2026-02-15T13:05" },
+        { "sodiumValue": 148, "dateTimeStamp": "2026-02-15T15:40" },
+        { "sodiumValue": 146, "dateTimeStamp": "2026-02-15T18:20" },
+        { "sodiumValue": 145, "dateTimeStamp": "2026-02-15T21:00" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-15T06:15" },
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-15T11:50" },
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-15T16:55" }
+      ]
+    },
+    {
+      "name": "Patient 16",
+      "age": 44,
+      "male": false,
+      "weightKg": 60,
+      "sodiumValues": [
+        { "sodiumValue": 145, "dateTimeStamp": "2026-02-16T06:05" },
+        { "sodiumValue": 144, "dateTimeStamp": "2026-02-16T08:40" },
+        { "sodiumValue": 143, "dateTimeStamp": "2026-02-16T11:10" },
+        { "sodiumValue": 144, "dateTimeStamp": "2026-02-16T13:55" },
+        { "sodiumValue": 142, "dateTimeStamp": "2026-02-16T16:25" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-16T07:00" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-16T12:30" }
+      ]
+    },
+    {
+      "name": "Patient 17",
+      "age": 57,
+      "male": true,
+      "weightKg": 86,
+      "sodiumValues": [
+        { "sodiumValue": 160, "dateTimeStamp": "2026-02-17T06:10" },
+        { "sodiumValue": 158, "dateTimeStamp": "2026-02-17T08:45" },
+        { "sodiumValue": 157, "dateTimeStamp": "2026-02-17T11:30" },
+        { "sodiumValue": 155, "dateTimeStamp": "2026-02-17T14:00" },
+        { "sodiumValue": 154, "dateTimeStamp": "2026-02-17T16:40" },
+        { "sodiumValue": 153, "dateTimeStamp": "2026-02-17T19:15" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-17T07:05" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-17T15:10" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-17T20:35" }
+      ]
+    },
+    {
+      "name": "Patient 18",
+      "age": 33,
+      "male": false,
+      "weightKg": 69,
+      "sodiumValues": [
+        { "sodiumValue": 150, "dateTimeStamp": "2026-02-18T06:35" },
+        { "sodiumValue": 149, "dateTimeStamp": "2026-02-18T09:00" },
+        { "sodiumValue": 148, "dateTimeStamp": "2026-02-18T11:25" },
+        { "sodiumValue": 147, "dateTimeStamp": "2026-02-18T13:55" },
+        { "sodiumValue": 146, "dateTimeStamp": "2026-02-18T16:20" },
+        { "sodiumValue": 145, "dateTimeStamp": "2026-02-18T18:50" },
+        { "sodiumValue": 143, "dateTimeStamp": "2026-02-18T21:30" },
+        { "sodiumValue": 142, "dateTimeStamp": "2026-02-18T23:10" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-18T07:10" },
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-18T12:40" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-18T17:35" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-18T22:05" }
+      ]
+    },
+    {
+      "name": "Patient 19",
+      "age": 74,
+      "male": true,
+      "weightKg": 77,
+      "sodiumValues": [
+        { "sodiumValue": 155, "dateTimeStamp": "2026-02-19T05:25" },
+        { "sodiumValue": 154, "dateTimeStamp": "2026-02-19T07:55" },
+        { "sodiumValue": 152, "dateTimeStamp": "2026-02-19T10:20" },
+        { "sodiumValue": 151, "dateTimeStamp": "2026-02-19T12:50" },
+        { "sodiumValue": 150, "dateTimeStamp": "2026-02-19T15:15" },
+        { "sodiumValue": 148, "dateTimeStamp": "2026-02-19T17:45" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-19T06:05" },
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-19T11:35" },
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-19T16:30" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-19T20:10" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-19T22:15" }
+      ]
+    },
+    {
+      "name": "Patient 20",
+      "age": 49,
+      "male": false,
+      "weightKg": 63,
+      "sodiumValues": [
+        { "sodiumValue": 156, "dateTimeStamp": "2026-02-20T06:00" },
+        { "sodiumValue": 155, "dateTimeStamp": "2026-02-20T08:35" },
+        { "sodiumValue": 153, "dateTimeStamp": "2026-02-20T11:05" },
+        { "sodiumValue": 154, "dateTimeStamp": "2026-02-20T13:40" },
+        { "sodiumValue": 152, "dateTimeStamp": "2026-02-20T16:15" },
+        { "sodiumValue": 151, "dateTimeStamp": "2026-02-20T18:55" },
+        { "sodiumValue": 149, "dateTimeStamp": "2026-02-20T21:25" }
+      ],
+      "waterGiven": [
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-20T06:45" },
+        { "waterGivenCC": 500, "dateTimeStamp": "2026-02-20T12:20" },
+        { "waterGivenCC": 250, "dateTimeStamp": "2026-02-20T17:40" }
+      ]
+    }
+  ]
+  

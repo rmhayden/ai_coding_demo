@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Patient Viewer</title>
+</head>
+<body>
+
+<h2>Patient Data</h2>
+<div id="output"></div>
+
+<script>
+  // ----------------------------------
+  // Example JSON with 5 patients
+  // ----------------------------------
+  const patients = [
+    {
+      name: "Alice Johnson",
+      age: 45,
+      male: false,
+      weightKg: 65,
+      sodiumValues: [
+        { sodiumValue: 128, dateTimeStamp: "2026-02-01T08:00" },
+        { sodiumValue: 130, dateTimeStamp: "2026-02-01T16:00" }
+      ],
+      waterGiven: [
+        { waterGivenCC: 500, dateTimeStamp: "2026-02-01T09:00" }
+      ]
+    },
+    {
+      name: "Bob Smith",
+      age: 60,
+      male: true,
+      weightKg: 82,
+      sodiumValues: [
+        { sodiumValue: 134, dateTimeStamp: "2026-02-02T07:30" }
+      ],
+      waterGiven: [
+        { waterGivenCC: 250, dateTimeStamp: "2026-02-02T10:00" }
+      ]
+    },
+    {
+      name: "Carol Lee",
+      age: 72,
+      male: false,
+      weightKg: 58,
+      sodiumValues: [
+        { sodiumValue: 126, dateTimeStamp: "2026-02-03T06:45" },
+        { sodiumValue: 129, dateTimeStamp: "2026-02-03T18:00" }
+      ],
+      waterGiven: []
+    },
+    {
+      name: "David Nguyen",
+      age: 39,
+      male: true,
+      weightKg: 90,
+      sodiumValues: [
+        { sodiumValue: 137, dateTimeStamp: "2026-02-04T09:00" }
+      ],
+      waterGiven: [
+        { waterGivenCC: 1000, dateTimeStamp: "2026-02-04T11:00" }
+      ]
+    },
+    {
+      name: "Emily Carter",
+      age: 55,
+      male: false,
+      weightKg: 70,
+      sodiumValues: [
+        { sodiumValue: 131, dateTimeStamp: "2026-02-05T08:15" }
+      ],
+      waterGiven: [
+        { waterGivenCC: 500, dateTimeStamp: "2026-02-05T09:30" },
+        { waterGivenCC: 250, dateTimeStamp: "2026-02-05T14:00" }
+      ]
+    }
+  ];
+
+  // ----------------------------------
+  // Render patients to the page
+  // ----------------------------------
+  const output = document.getElementById("output");
+
+  patients.forEach((patient, index) => {
+    const div = document.createElement("div");
+    div.style.border = "1px solid #ccc";
+    div.style.padding = "10px";
+    div.style.marginBottom = "15px";
+
+    div.innerHTML = `
+      <h3>Patient ${index + 1}</h3>
+      <p><strong>Name:</strong> ${patient.name}</p>
+      <p><strong>Age:</strong> ${patient.age}</p>
+      <p><strong>Male:</strong> ${patient.male}</p>
+      <p><strong>Weight (kg):</strong> ${patient.weightKg}</p>
+
+      <p><strong>Sodium Values:</strong></p>
+      <ul>
+        ${patient.sodiumValues.map(s =>
+          `<li>${s.sodiumValue} mmol/L @ ${s.dateTimeStamp}</li>`
+        ).join("")}
+      </ul>
+
+      <p><strong>Water Given:</strong></p>
+      <ul>
+        ${
+          patient.waterGiven.length === 0
+            ? "<li>None</li>"
+            : patient.waterGiven.map(w =>
+                `<li>${w.waterGivenCC} cc @ ${w.dateTimeStamp}</li>`
+              ).join("")
+        }
+      </ul>
+    `;
+
+    output.appendChild(div);
+  });
+</script>
+
+</body>
+</html>

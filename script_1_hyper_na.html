@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Free Water Deficit Calculator</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 500px;
+      margin: 40px auto;
+      line-height: 1.5;
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      font-size: 14px;
+    }
+    button {
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <h2>Free Water Deficit Calculator</h2>
+
+  <label>
+    Patient Category
+    <select id="category">
+      <option value="0.6">Adult Male (TBW 0.6)</option>
+      <option value="0.5">Adult Female (TBW 0.5)</option>
+      <option value="0.5">Elderly Male (TBW 0.5)</option>
+      <option value="0.45">Elderly Female (TBW 0.45)</option>
+      <option value="0.6">Child (TBW 0.6)</option>
+    </select>
+  </label>
+
+  <label>
+    Weight (kg)
+    <input type="number" id="weight" step="0.1">
+  </label>
+
+  <label>
+    Current Sodium (mEq/L)
+    <input type="number" id="currentNa" step="0.1">
+  </label>
+
+  <label>
+    Ideal Sodium (mEq/L)
+    <input type="number" id="idealNa" step="0.1" value="140">
+  </label>
+
+  <button onclick="calculateFWD()">Calculate</button>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    function calculateFWD() {
+      const tbwFraction = parseFloat(document.getElementById("category").value);
+      const weight = parseFloat(document.getElementById("weight").value);
+      const currentNa = parseFloat(document.getElementById("currentNa").value);
+      const idealNa = parseFloat(document.getElementById("idealNa").value);
+
+      if (
+        isNaN(tbwFraction) ||
+        isNaN(weight) ||
+        isNaN(currentNa) ||
+        isNaN(idealNa) ||
+        weight <= 0 ||
+        idealNa <= 0
+      ) {
+        document.getElementById("result").innerText =
+          "Please enter valid inputs.";
+        return;
+      }
+
+      const freeWaterDeficit =
+        tbwFraction * weight * ((currentNa / idealNa) - 1);
+
+      document.getElementById("result").innerText =
+        "Free Water Deficit: " +
+        freeWaterDeficit.toFixed(2) +
+        " L";
+    }
+  </script>
+
+</body>
+</html>
