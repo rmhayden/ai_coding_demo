@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Patient Array Display</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      padding: 24px;
+      background: #f5f7fb;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .patient {
+      background: white;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    .section {
+      margin-top: 10px;
+    }
+    .section-title {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    li {
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Patient Data Display</h1>
+
+  <div id="output"></div>
+
+  <script>
+    /***********************
+     * Example JSON (5 patients)
+     ***********************/
+    const patients = [
+      {
+        name: "Alice Smith",
+        age: 65,
+        male: false,
+        weightKg: 68,
+        sodiumValues: [
+          { sodiumValue: 148, dateTimeStamp: "2026-02-01T08:00" },
+          { sodiumValue: 145, dateTimeStamp: "2026-02-01T14:00" }
+        ],
+        waterGiven: [
+          { waterGivenCC: 500, dateTimeStamp: "2026-02-01T10:00" }
+        ]
+      },
+      {
+        name: "Bob Johnson",
+        age: 72,
+        male: true,
+        weightKg: 82,
+        sodiumValues: [
+          { sodiumValue: 152, dateTimeStamp: "2026-02-02T06:00" },
+          { sodiumValue: 150, dateTimeStamp: "2026-02-02T12:00" }
+        ],
+        waterGiven: [
+          { waterGivenCC: 750, dateTimeStamp: "2026-02-02T09:00" },
+          { waterGivenCC: 500, dateTimeStamp: "2026-02-02T15:00" }
+        ]
+      },
+      {
+        name: "Carol Nguyen",
+        age: 54,
+        male: false,
+        weightKg: 60,
+        sodiumValues: [
+          { sodiumValue: 146, dateTimeStamp: "2026-02-03T07:30" }
+        ],
+        waterGiven: []
+      },
+      {
+        name: "David Lee",
+        age: 40,
+        male: true,
+        weightKg: 90,
+        sodiumValues: [
+          { sodiumValue: 149, dateTimeStamp: "2026-02-04T08:00" },
+          { sodiumValue: 147, dateTimeStamp: "2026-02-04T16:00" }
+        ],
+        waterGiven: [
+          { waterGivenCC: 1000, dateTimeStamp: "2026-02-04T11:00" }
+        ]
+      },
+      {
+        name: "Emma Patel",
+        age: 30,
+        male: false,
+        weightKg: 55,
+        sodiumValues: [
+          { sodiumValue: 144, dateTimeStamp: "2026-02-05T09:00" }
+        ],
+        waterGiven: [
+          { waterGivenCC: 250, dateTimeStamp: "2026-02-05T12:00" }
+        ]
+      }
+    ];
+
+    /***********************
+     * Render patients
+     ***********************/
+    const outputEl = document.getElementById("output");
+
+    patients.forEach((patient, index) => {
+      const patientDiv = document.createElement("div");
+      patientDiv.className = "patient";
+
+      patientDiv.innerHTML = `
+        <h2>Patient ${index + 1}: ${patient.name}</h2>
+        <div>Age: ${patient.age}</div>
+        <div>Sex: ${patient.male ? "Male" : "Female"}</div>
+        <div>Weight: ${patient.weightKg} kg</div>
+
+        <div class="section">
+          <div class="section-title">Sodium Values</div>
+          <ul>
+            ${
+              patient.sodiumValues.length === 0
+                ? "<li>None</li>"
+                : patient.sodiumValues
+                    .map(
+                      sv =>
+                        `<li>${sv.sodiumValue} mEq/L at ${sv.dateTimeStamp}</li>`
+                    )
+                    .join("")
+            }
+          </ul>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Water Given</div>
+          <ul>
+            ${
+              patient.waterGiven.length === 0
+                ? "<li>None</li>"
+                : patient.waterGiven
+                    .map(
+                      w =>
+                        `<li>${w.waterGivenCC} cc at ${w.dateTimeStamp}</li>`
+                    )
+                    .join("")
+            }
+          </ul>
+        </div>
+      `;
+
+      outputEl.appendChild(patientDiv);
+    });
+  </script>
+
+</body>
+</html>

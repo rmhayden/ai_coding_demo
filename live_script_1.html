@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Free Water Deficit Calculator</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: #f5f7fb;
+      padding: 40px;
+    }
+    .card {
+      max-width: 420px;
+      margin: auto;
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-top: 14px;
+      font-weight: 600;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    button {
+      margin-top: 20px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover {
+      background: #1e4fd6;
+    }
+    .output {
+      margin-top: 20px;
+      padding: 14px;
+      background: #f0f4ff;
+      border-radius: 8px;
+      font-weight: 600;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Free Water Deficit</h2>
+
+    <label>Patient Category</label>
+    <select id="category">
+      <option value="0.6">Adult Male (60%)</option>
+      <option value="0.5">Adult Female (50%)</option>
+      <option value="0.5">Elderly Male (50%)</option>
+      <option value="0.45">Elderly Female (45%)</option>
+      <option value="0.6">Child (60%)</option>
+    </select>
+
+    <label>Weight (kg)</label>
+    <input type="number" id="weight" step="0.1" />
+
+    <label>Current Sodium (mEq/L)</label>
+    <input type="number" id="currentNa" step="0.1" />
+
+    <label>Ideal Sodium (mEq/L)</label>
+    <input type="number" id="idealNa" step="0.1" value="140" />
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="output" id="result">
+      —
+    </div>
+  </div>
+
+  <script>
+    function calculate() {
+      const tbwFraction = parseFloat(document.getElementById("category").value);
+      const weight = parseFloat(document.getElementById("weight").value);
+      const currentNa = parseFloat(document.getElementById("currentNa").value);
+      const idealNa = parseFloat(document.getElementById("idealNa").value);
+
+      if (isNaN(weight) || isNaN(currentNa) || isNaN(idealNa)) {
+        document.getElementById("result").textContent = "Please fill in all fields.";
+        return;
+      }
+
+      const freeWaterDeficit =
+        tbwFraction * weight * ((currentNa / idealNa) - 1);
+
+      document.getElementById("result").textContent =
+        "Free Water Deficit: " + freeWaterDeficit.toFixed(2) + " L";
+    }
+  </script>
+
+</body>
+</html>

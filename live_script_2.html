@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Free Water Deficit Calculator</title>
+  <style>
+    :root{
+      --blue-900:#0b2a4a;
+      --blue-700:#0f4aa6;
+      --blue-600:#1d63d6;
+      --blue-100:#eaf2ff;
+
+      --yellow-500:#f6c445;
+      --yellow-200:#fff2c7;
+
+      --text:#0b1220;
+      --muted:#526077;
+      --border:#d7e3f6;
+      --card:#ffffff;
+      --shadow: 0 18px 45px rgba(10, 38, 70, .12);
+      --radius: 16px;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% 0%, rgba(246,196,69,.25), transparent 55%),
+        radial-gradient(900px 500px at 95% 10%, rgba(29,99,214,.20), transparent 55%),
+        linear-gradient(180deg, #f7fbff 0%, #f2f7ff 60%, #f7fbff 100%);
+      padding: 42px 18px;
+    }
+
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1fr;
+    }
+
+    .header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 18px;
+      padding: 18px 18px 0 18px;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+    }
+
+    .logo{
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg, var(--blue-700), var(--blue-600));
+      box-shadow: 0 10px 25px rgba(29,99,214,.25);
+      position: relative;
+      overflow:hidden;
+    }
+    .logo::after{
+      content:"";
+      position:absolute;
+      inset:-40% -40%;
+      background: radial-gradient(circle at 30% 30%, rgba(246,196,69,.65), transparent 45%);
+      transform: rotate(20deg);
+    }
+
+    .header h1{
+      font-size: 20px;
+      line-height: 1.2;
+      margin:0;
+      letter-spacing: .2px;
+    }
+    .header p{
+      margin: 6px 0 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .card{
+      max-width: 560px;
+      margin: 0 auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .card-topbar{
+      background: linear-gradient(90deg, rgba(29,99,214,.10), rgba(246,196,69,.18));
+      border-bottom: 1px solid var(--border);
+      padding: 14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(246,196,69,.22);
+      border: 1px solid rgba(246,196,69,.35);
+      color: var(--blue-900);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .2px;
+      white-space: nowrap;
+    }
+    .badge-dot{
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--yellow-500);
+      box-shadow: 0 0 0 3px rgba(246,196,69,.25);
+    }
+
+    .content{
+      padding: 18px;
+    }
+
+    .grid{
+      display:grid;
+      gap: 14px;
+      grid-template-columns: 1fr;
+    }
+
+    .field label{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue-900);
+      margin-bottom: 6px;
+    }
+
+    .hint{
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    select, input{
+      width:100%;
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fbfdff;
+      font-size: 14px;
+      outline: none;
+      transition: box-shadow .15s ease, border-color .15s ease, background .15s ease;
+    }
+    select:focus, input:focus{
+      border-color: rgba(29,99,214,.55);
+      box-shadow: 0 0 0 4px rgba(29,99,214,.12);
+      background: #ffffff;
+    }
+
+    .row2{
+      display:grid;
+      gap: 14px;
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 520px){
+      .row2{ grid-template-columns: 1fr; }
+    }
+
+    .btns{
+      display:flex;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    button{
+      border: none;
+      border-radius: 12px;
+      padding: 11px 14px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: .2px;
+      cursor: pointer;
+      transition: transform .06s ease, filter .15s ease, box-shadow .15s ease;
+    }
+
+    .primary{
+      flex: 1 1 220px;
+      background: linear-gradient(135deg, var(--blue-700), var(--blue-600));
+      color: white;
+      box-shadow: 0 12px 24px rgba(29,99,214,.22);
+    }
+    .primary:hover{ filter: brightness(1.02); }
+    .primary:active{ transform: translateY(1px); }
+
+    .secondary{
+      flex: 1 1 160px;
+      background: #fffaf0;
+      color: var(--blue-900);
+      border: 1px solid rgba(246,196,69,.55);
+      box-shadow: 0 10px 18px rgba(246,196,69,.10);
+    }
+    .secondary:hover{ filter: brightness(1.01); }
+    .secondary:active{ transform: translateY(1px); }
+
+    .result{
+      margin-top: 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, #ffffff, #f8fbff);
+      padding: 14px;
+    }
+
+    .result-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .result .kicker{
+      color: var(--muted);
+      font-size: 12px;
+      margin: 0;
+    }
+
+    .result .value{
+      font-size: 28px;
+      font-weight: 900;
+      margin: 2px 0 0 0;
+      color: var(--blue-900);
+      letter-spacing: .2px;
+    }
+
+    .pill{
+      align-self:center;
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(29,99,214,.10);
+      border: 1px solid rgba(29,99,214,.18);
+      color: var(--blue-900);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .pill span{
+      display:inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(246,196,69,.35);
+      border: 1px solid rgba(246,196,69,.45);
+      font-weight: 900;
+    }
+
+    .note{
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .footer{
+      max-width: 560px;
+      margin: 0 auto;
+      text-align:center;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 8px 10px;
+    }
+
+    .error{
+      color: #b42318;
+      background: #fff3f2;
+      border: 1px solid #ffd1cd;
+      padding: 10px 12px;
+      border-radius: 12px;
+      margin-top: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      display:none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <div class="header">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>Free Water Deficit Calculator</h1>
+          <p>Estimates water deficit using TBW fraction × weight × ((Na/goal) − 1).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-topbar">
+        <div class="badge"><span class="badge-dot"></span>Blue + Yellow Clinical Theme</div>
+        <div style="color:var(--muted); font-size:12px; font-weight:700;">
+          TBW preset: <span id="tbwDisplay" style="color:var(--blue-900);">0.60</span>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="grid">
+          <div class="field">
+            <label>
+              Patient Category
+              <span class="hint">sets TBW fraction</span>
+            </label>
+            <select id="category">
+              <option value="0.6">Adult Male (60%)</option>
+              <option value="0.5">Adult Female (50%)</option>
+              <option value="0.5">Elderly Male (50%)</option>
+              <option value="0.45">Elderly Female (45%)</option>
+              <option value="0.6">Child (60%)</option>
+            </select>
+          </div>
+
+          <div class="row2">
+            <div class="field">
+              <label>Weight (kg) <span class="hint">e.g., 70</span></label>
+              <input id="weight" type="number" step="0.1" inputmode="decimal" placeholder="70" />
+            </div>
+
+            <div class="field">
+              <label>Current Sodium (mEq/L) <span class="hint">e.g., 154</span></label>
+              <input id="currentNa" type="number" step="0.1" inputmode="decimal" placeholder="154" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Ideal Sodium (mEq/L) <span class="hint">default 140</span></label>
+            <input id="idealNa" type="number" step="0.1" inputmode="decimal" value="140" />
+          </div>
+
+          <div class="btns">
+            <button class="primary" id="calcBtn">Calculate</button>
+            <button class="secondary" id="resetBtn" type="button">Reset</button>
+          </div>
+
+          <div class="error" id="errorBox"></div>
+
+          <div class="result" aria-live="polite">
+            <div class="result-top">
+              <div>
+                <p class="kicker">Estimated Free Water Deficit</p>
+                <p class="value" id="resultValue">—</p>
+              </div>
+              <div class="pill" title="Total Body Water fraction used">
+                TBW <span id="tbwPill">0.60</span>
+              </div>
+            </div>
+            <div class="note" id="resultNote">
+              Enter values above, then click <b>Calculate</b>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      For educational use. Validate with clinical context and local protocols.
+    </div>
+
+  </div>
+
+  <script>
+    const categoryEl = document.getElementById("category");
+    const weightEl = document.getElementById("weight");
+    const currentNaEl = document.getElementById("currentNa");
+    const idealNaEl = document.getElementById("idealNa");
+
+    const tbwDisplayEl = document.getElementById("tbwDisplay");
+    const tbwPillEl = document.getElementById("tbwPill");
+    const resultValueEl = document.getElementById("resultValue");
+    const resultNoteEl = document.getElementById("resultNote");
+    const errorBoxEl = document.getElementById("errorBox");
+
+    const calcBtn = document.getElementById("calcBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    function setTBWUI() {
+      const tbw = parseFloat(categoryEl.value);
+      const tbwStr = tbw.toFixed(2);
+      tbwDisplayEl.textContent = tbwStr;
+      tbwPillEl.textContent = tbwStr;
+    }
+
+    function showError(msg) {
+      errorBoxEl.textContent = msg;
+      errorBoxEl.style.display = "block";
+    }
+
+    function clearError() {
+      errorBoxEl.textContent = "";
+      errorBoxEl.style.display = "none";
+    }
+
+    function calculate() {
+      clearError();
+
+      const tbw = parseFloat(categoryEl.value);
+      const weight = parseFloat(weightEl.value);
+      const currentNa = parseFloat(currentNaEl.value);
+      const idealNa = parseFloat(idealNaEl.value);
+
+      if ([tbw, weight, currentNa, idealNa].some(v => Number.isNaN(v))) {
+        showError("Please fill in Weight, Current Sodium, and Ideal Sodium.");
+        return;
+      }
+      if (weight <= 0) {
+        showError("Weight must be greater than 0.");
+        return;
+      }
+      if (currentNa <= 0 || idealNa <= 0) {
+        showError("Sodium values must be greater than 0.");
+        return;
+      }
+
+      const deficitL = tbw * weight * ((currentNa / idealNa) - 1);
+
+      resultValueEl.textContent = `${deficitL.toFixed(2)} L`;
+
+      if (deficitL < 0) {
+        resultNoteEl.textContent =
+          "Result is negative (current sodium below ideal). This suggests no free water deficit by this formula.";
+      } else {
+        const ml = deficitL * 1000;
+        resultNoteEl.textContent =
+          `Equivalent volume: ~${ml.toFixed(0)} mL.`;
+      }
+    }
+
+    function resetAll() {
+      clearError();
+      categoryEl.value = "0.6";
+      weightEl.value = "";
+      currentNaEl.value = "";
+      idealNaEl.value = "140";
+      setTBWUI();
+      resultValueEl.textContent = "—";
+      resultNoteEl.innerHTML = 'Enter values above, then click <b>Calculate</b>.';
+    }
+
+    categoryEl.addEventListener("change", setTBWUI);
+    calcBtn.addEventListener("click", calculate);
+    resetBtn.addEventListener("click", resetAll);
+
+    // Nice UX: press Enter to calculate
+    [weightEl, currentNaEl, idealNaEl].forEach(el => {
+      el.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") calculate();
+      });
+    });
+
+    setTBWUI();
+  </script>
+</body>
+</html>
