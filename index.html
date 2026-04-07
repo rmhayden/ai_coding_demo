@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Resource Downloads</title>
+  <title>Coding.NephroMaine.com</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -21,15 +21,20 @@
     }
 
     header h1 {
-      font-size: 2rem;
-      font-weight: 700;
+      font-size: 2.1rem;
+      font-weight: 800;
       color: #1a1a2e;
+      letter-spacing: -0.5px;
     }
 
     header p {
-      margin-top: 8px;
+      margin-top: 10px;
       color: #555;
-      font-size: 1rem;
+      font-size: 0.97rem;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
     }
 
     .container {
@@ -103,6 +108,7 @@
     .btn-group {
       display: flex;
       gap: 8px;
+      flex-shrink: 0;
     }
 
     .view-btn {
@@ -138,7 +144,24 @@
     }
     .download-btn:hover { background: #2f4abf; }
 
-    /* ── Inline preview panel ── */
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 14px;
+      background: #2f9e44;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .link-btn:hover { background: #267a35; }
+
+    /* ── Inline text preview panel ── */
     .preview-panel {
       display: none;
       margin: 0 24px 16px 52px;
@@ -146,7 +169,6 @@
       border-radius: 8px;
       overflow: hidden;
     }
-
     .preview-panel.visible { display: block; }
 
     .preview-toolbar {
@@ -190,13 +212,42 @@
       font-size: 0.85rem;
       font-family: inherit;
     }
+
+    /* ── PDF viewer panel ── */
+    .pdf-panel {
+      display: none;
+      margin: 0 24px 16px 52px;
+      border: 1px solid #e2e6ea;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .pdf-panel.visible { display: block; }
+
+    .pdf-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      background: #f8f9fa;
+      border-bottom: 1px solid #e2e6ea;
+      font-size: 0.78rem;
+      color: #666;
+    }
+
+    .pdf-frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: none;
+      display: block;
+      background: #525659;
+    }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>Webinar Resources</h1>
-  <p>Click a folder to expand it. View a file inline or download it directly.</p>
+  <h1>Coding.NephroMaine.com</h1>
+  <p>Resources to review and download that go along with the demonstrations from the session. Open any folder below to view or download files.</p>
 </header>
 
 <div class="container">
@@ -207,7 +258,7 @@
       <span class="folder-icon">📁</span>
       <div class="folder-label">
         <h2>Prompts</h2>
-        <span>prompt_1.md &mdash; prompt_6.md</span>
+        <span>prompt_1.md &mdash; prompt_4.md</span>
       </div>
       <span class="chevron">&#9654;</span>
     </div>
@@ -273,36 +324,6 @@
         <div class="preview-content preview-loading">Loading...</div>
       </div>
 
-      <div class="file-item">
-        <span class="file-name"><span class="ext-icon">📄</span> prompt_5.md</span>
-        <div class="btn-group">
-          <button class="view-btn" onclick="togglePreview('preview-p5', 'prompt_5.md', this)">&#128065; View</button>
-          <a class="download-btn" href="prompt_5.md" download>&#8595; Download</a>
-        </div>
-      </div>
-      <div class="preview-panel" id="preview-p5">
-        <div class="preview-toolbar">
-          <span>prompt_5.md</span>
-          <button class="preview-close" onclick="closePreview('preview-p5')" title="Close">&#10005;</button>
-        </div>
-        <div class="preview-content preview-loading">Loading...</div>
-      </div>
-
-      <div class="file-item">
-        <span class="file-name"><span class="ext-icon">📄</span> prompt_6.md</span>
-        <div class="btn-group">
-          <button class="view-btn" onclick="togglePreview('preview-p6', 'prompt_6.md', this)">&#128065; View</button>
-          <a class="download-btn" href="prompt_6.md" download>&#8595; Download</a>
-        </div>
-      </div>
-      <div class="preview-panel" id="preview-p6">
-        <div class="preview-toolbar">
-          <span>prompt_6.md</span>
-          <button class="preview-close" onclick="closePreview('preview-p6')" title="Close">&#10005;</button>
-        </div>
-        <div class="preview-content preview-loading">Loading...</div>
-      </div>
-
     </div>
   </div>
 
@@ -336,6 +357,58 @@
     </div>
   </div>
 
+  <!-- Slides folder -->
+  <div class="folder-card" id="folder-slides">
+    <div class="folder-header" onclick="toggleFolder('folder-slides')">
+      <span class="folder-icon">📁</span>
+      <div class="folder-label">
+        <h2>Session Slides</h2>
+        <span>Presentation PDF</span>
+      </div>
+      <span class="chevron">&#9654;</span>
+    </div>
+    <div class="file-list">
+
+      <div class="file-item">
+        <span class="file-name"><span class="ext-icon">📑</span> ai_coding_informatics.pdf</span>
+        <div class="btn-group">
+          <button class="view-btn" onclick="togglePdf('pdf-slides', this)">&#128065; View</button>
+          <a class="download-btn" href="slides_pdf/ai_coding_informatics.pdf" download>&#8595; Download</a>
+        </div>
+      </div>
+      <div class="pdf-panel" id="pdf-slides">
+        <div class="pdf-toolbar">
+          <span>ai_coding_informatics.pdf</span>
+          <button class="preview-close" onclick="closePdf('pdf-slides')" title="Close">&#10005;</button>
+        </div>
+        <iframe class="pdf-frame" src="slides_pdf/ai_coding_informatics.pdf#view=Fit" title="Session Slides"></iframe>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- More Resources folder -->
+  <div class="folder-card" id="folder-more">
+    <div class="folder-header" onclick="toggleFolder('folder-more')">
+      <span class="folder-icon">📁</span>
+      <div class="folder-label">
+        <h2>More Resources</h2>
+        <span>Tools &amp; links</span>
+      </div>
+      <span class="chevron">&#9654;</span>
+    </div>
+    <div class="file-list">
+
+      <div class="file-item">
+        <span class="file-name"><span class="ext-icon">💻</span> Visual Studio Code</span>
+        <div class="btn-group">
+          <a class="link-btn" href="https://code.visualstudio.com/download" target="_blank" rel="noopener">&#8599; Link to Download</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -354,11 +427,8 @@
       const text = await res.text();
       contentEl.classList.remove('preview-loading');
       if (isJson) {
-        try {
-          contentEl.textContent = JSON.stringify(JSON.parse(text), null, 2);
-        } catch {
-          contentEl.textContent = text;
-        }
+        try { contentEl.textContent = JSON.stringify(JSON.parse(text), null, 2); }
+        catch { contentEl.textContent = text; }
       } else {
         contentEl.textContent = text;
       }
@@ -371,28 +441,41 @@
   function togglePreview(panelId, url, btn) {
     const panel = document.getElementById(panelId);
     const isOpen = panel.classList.contains('visible');
-
     if (isOpen) {
       panel.classList.remove('visible');
-      btn.textContent = '\u{1F441} View';
+      btn.innerHTML = '&#128065; View';
     } else {
       panel.classList.add('visible');
-      btn.textContent = '\u25B2 Hide';
+      btn.innerHTML = '&#9650; Hide';
       const contentEl = panel.querySelector('.preview-content');
-      const isJson = url.endsWith('.json');
-      loadFile(url, contentEl, isJson);
+      loadFile(url, contentEl, url.endsWith('.json'));
     }
   }
 
   function closePreview(panelId) {
     const panel = document.getElementById(panelId);
     panel.classList.remove('visible');
-    // reset the View button text for this panel's file-item
-    const fileItem = panel.previousElementSibling;
-    if (fileItem) {
-      const btn = fileItem.querySelector('.view-btn');
-      if (btn) btn.textContent = '\u{1F441} View';
+    const btn = panel.previousElementSibling && panel.previousElementSibling.querySelector('.view-btn');
+    if (btn) btn.innerHTML = '&#128065; View';
+  }
+
+  function togglePdf(panelId, btn) {
+    const panel = document.getElementById(panelId);
+    const isOpen = panel.classList.contains('visible');
+    if (isOpen) {
+      panel.classList.remove('visible');
+      btn.innerHTML = '&#128065; View';
+    } else {
+      panel.classList.add('visible');
+      btn.innerHTML = '&#9650; Hide';
     }
+  }
+
+  function closePdf(panelId) {
+    const panel = document.getElementById(panelId);
+    panel.classList.remove('visible');
+    const btn = panel.previousElementSibling && panel.previousElementSibling.querySelector('.view-btn');
+    if (btn) btn.innerHTML = '&#128065; View';
   }
 </script>
 
