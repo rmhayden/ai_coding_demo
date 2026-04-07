@@ -35,4 +35,6 @@ Add a key-value pair to the sodiumValues object for “newTotalBodyWater”, whi
 
 Add a key-value pair to the sodiumValues object for “predictedSodium”, which is equal to “totalCations” for the patient divided by “newTotalBodyWater” for that given sodiumValues object, as already calculated in prior step
 
+Remember to convert waterGivenCC from cc to liters before adding to new total body water.
 
+Please keep styling to a minimum for this tool.
