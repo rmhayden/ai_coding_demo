@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patients Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 24px;
+      background: #f7f7f7;
+      color: #222;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-top: 0;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 220px;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      background: white;
+    }
+
+    button {
+      margin-top: 12px;
+      padding: 10px 16px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .error {
+      margin-top: 12px;
+      color: #b91c1c;
+      font-weight: bold;
+    }
+
+    .patient-card {
+      background: white;
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 18px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .patient-card h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      margin-top: 16px;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #111827;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background: #f3f4f6;
+    }
+
+    .muted {
+      color: #666;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <h1>Patients Viewer</h1>
+  <p>Paste your JSON below, then click <strong>Render Patients</strong>.</p>
+
+  <textarea id="jsonInput">
+[
+  {
+    "name": "John Smith",
+    "age": 67,
+    "male": true,
+    "weightKg": 82,
+    "sodiumValues": [
+      {
+        "sodiumValue": 128,
+        "dateTimeStamp": "2026-04-07 08:00"
+      },
+      {
+        "sodiumValue": 131,
+        "dateTimeStamp": "2026-04-07 14:00"
+      }
+    ],
+    "waterGiven": [
+      {
+        "waterGivenCC": 500,
+        "dateTimeStamp": "2026-04-07 09:00"
+      },
+      {
+        "waterGivenCC": 250,
+        "dateTimeStamp": "2026-04-07 12:00"
+      }
+    ]
+  },
+  {
+    "name": "Jane Doe",
+    "age": 54,
+    "male": false,
+    "weightKg": 65,
+    "sodiumValues": [
+      {
+        "sodiumValue": 124,
+        "dateTimeStamp": "2026-04-07 07:30"
+      }
+    ],
+    "waterGiven": [
+      {
+        "waterGivenCC": 300,
+        "dateTimeStamp": "2026-04-07 10:15"
+      }
+    ]
+  }
+]
+  </textarea>
+
+  <br />
+  <button onclick="renderPatients()">Render Patients</button>
+
+  <div id="errorMessage" class="error"></div>
+  <div id="output"></div>
+
+  <script>
+    function renderPatients() {
+      const input = document.getElementById("jsonInput").value.trim();
+      const output = document.getElementById("output");
+      const errorMessage = document.getElementById("errorMessage");
+
+      output.innerHTML = "";
+      errorMessage.textContent = "";
+
+      try {
+        let cleanedInput = input;
+
+        // Allow pasted input like: const patients = [...];
+        if (cleanedInput.startsWith("const patients")) {
+          cleanedInput = cleanedInput
+            .replace(/^const\s+patients\s*=\s*/i, "")
+            .replace(/;$/, "")
+            .trim();
+        }
+
+        let patients = JSON.parse(cleanedInput);
+
+        // Also allow { "patients": [...] }
+        if (!Array.isArray(patients) && Array.isArray(patients.patients)) {
+          patients = patients.patients;
+        }
+
+        if (!Array.isArray(patients)) {
+          throw new Error("Input must be an array of patients or an object with a 'patients' array.");
+        }
+
+        if (patients.length === 0) {
+          output.innerHTML = "<p class='muted'>No patients found.</p>";
+          return;
+        }
+
+        patients.forEach((patient, index) => {
+          const card = document.createElement("div");
+          card.className = "patient-card";
+
+          const sodiumRows = Array.isArray(patient.sodiumValues) && patient.sodiumValues.length > 0
+            ? patient.sodiumValues.map(item => `
+                <tr>
+                  <td>${item.sodiumValue ?? ""}</td>
+                  <td>${item.dateTimeStamp ?? ""}</td>
+                </tr>
+              `).join("")
+            : `<tr><td colspan="2" class="muted">No sodium values</td></tr>`;
+
+          const waterRows = Array.isArray(patient.waterGiven) && patient.waterGiven.length > 0
+            ? patient.waterGiven.map(item => `
+                <tr>
+                  <td>${item.waterGivenCC ?? ""}</td>
+                  <td>${item.dateTimeStamp ?? ""}</td>
+                </tr>
+              `).join("")
+            : `<tr><td colspan="2" class="muted">No water-given entries</td></tr>`;
+
+          card.innerHTML = `
+            <h2>Patient ${index + 1}: ${patient.name ?? "Unnamed Patient"}</h2>
+            <p><strong>Age:</strong> ${patient.age ?? ""}</p>
+            <p><strong>Male:</strong> ${patient.male === true ? "Yes" : patient.male === false ? "No" : ""}</p>
+            <p><strong>Weight (kg):</strong> ${patient.weightKg ?? ""}</p>
+
+            <div class="section-title">Sodium Values</div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Sodium Value</th>
+                  <th>Date/Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${sodiumRows}
+              </tbody>
+            </table>
+
+            <div class="section-title">Water Given</div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Water Given (cc)</th>
+                  <th>Date/Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${waterRows}
+              </tbody>
+            </table>
+          `;
+
+          output.appendChild(card);
+        });
+
+      } catch (error) {
+        errorMessage.textContent = "Invalid JSON: " + error.message;
+      }
+    }
+  </script>
+</body>
+</html>

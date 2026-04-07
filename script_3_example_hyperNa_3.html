@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Patient JSON → TBW / Total Cations / Predicted Sodium</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #111b2e;
+      --muted: #8aa0c6;
+      --text: #eaf1ff;
+      --border: rgba(255,255,255,0.12);
+      --accent: #6aa6ff;
+      --accent2: #ffd166;
+      --danger: #ff6b6b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 18px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #071026 0%, #070b14 100%);
+      color: var(--text);
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    h1 { margin: 0 0 12px; font-size: 20px; letter-spacing: 0.2px; }
+    .sub { margin: 0 0 16px; color: var(--muted); font-size: 13px; line-height: 1.4; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    @media (min-width: 980px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .card {
+      background: rgba(17, 27, 46, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.22);
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 10px 0 0;
+    }
+    button {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 650;
+      letter-spacing: 0.2px;
+    }
+    button:hover { filter: brightness(1.05); }
+    button.primary {
+      background: linear-gradient(90deg, rgba(106,166,255,0.9), rgba(255,209,102,0.85));
+      border: 0;
+      color: #061022;
+    }
+    button.danger {
+      border-color: rgba(255,107,107,0.45);
+      background: rgba(255,107,107,0.10);
+    }
+    textarea {
+      width: 100%;
+      min-height: 360px;
+      resize: vertical;
+      background: rgba(0,0,0,0.22);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      color: var(--text);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 12.5px;
+      line-height: 1.45;
+      outline: none;
+    }
+    textarea:focus { border-color: rgba(106,166,255,0.6); box-shadow: 0 0 0 3px rgba(106,166,255,0.12); }
+    .hint { font-size: 12px; color: var(--muted); margin-top: 8px; }
+    .status {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 12.5px;
+      white-space: pre-wrap;
+    }
+    .status.error {
+      border-color: rgba(255,107,107,0.45);
+      background: rgba(255,107,107,0.10);
+      color: #ffd6d6;
+    }
+    .pill {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 11px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .small { font-size: 12px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Patient JSON Processor <span class="pill">TBW • Total Cations • Predicted Sodium</span></h1>
+    <p class="sub">
+      Paste a <b>single patient object</b> or an <b>array of patient objects</b> into the input.
+      Click <b>Process</b> to generate a modified JSON with:
+      <span class="small">patient.totalBodyWater = weightKg × 0.5</span>,
+      <span class="small">patient.totalCations = totalBodyWater × first sodiumValue</span>,
+      and for each sodiumValues entry after the first:
+      <span class="small">newTotalBodyWater</span> and <span class="small">predictedSodium</span>.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h2 style="margin:0 0 8px; font-size:14px;">Input JSON</h2>
+        <textarea id="input" placeholder='Paste JSON here...'></textarea>
+        <div class="row">
+          <button class="primary" id="processBtn">Process</button>
+          <button id="exampleBtn">Load Example</button>
+          <button class="danger" id="clearBtn">Clear</button>
+        </div>
+        <div class="hint">
+          Date/time stamps should look like <code>2026-02-02T06:00</code>. Water is summed if its timestamp is ≤ the sodium timestamp.
+        </div>
+        <div id="status" class="status">Ready.</div>
+      </div>
+
+      <div class="card">
+        <h2 style="margin:0 0 8px; font-size:14px;">Modified Output JSON</h2>
+        <textarea id="output" placeholder="Output will appear here..." readonly></textarea>
+        <div class="row">
+          <button id="copyBtn">Copy Output</button>
+          <button class="primary" id="downloadBtn" disabled>Download JSON</button>
+        </div>
+        <div class="hint">
+          Download uses your browser’s standard file download (a <code>.json</code> file).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ----------------------------
+    // Helpers
+    // ----------------------------
+    function parseMaybeJSON(text) {
+      // Accept strict JSON only (recommended). If you paste JS object syntax, it may fail.
+      return JSON.parse(text);
+    }
+
+    function toMillis(dateTimeStamp) {
+      // Expected: "YYYY-MM-DDTHH:mm" (no timezone). We treat it as local time.
+      // If invalid, Date.parse returns NaN.
+      const ms = Date.parse(dateTimeStamp);
+      return ms;
+    }
+
+    function safeNumber(x) {
+      const n = Number(x);
+      return Number.isFinite(n) ? n : null;
+    }
+
+    function deepClone(obj) {
+      return JSON.parse(JSON.stringify(obj));
+    }
+
+    // Sum waterGivenCC up to (and including) a given sodium timestamp
+    function sumWaterUpTo(waterGivenArray, sodiumTimestampMs) {
+      if (!Array.isArray(waterGivenArray) || waterGivenArray.length === 0) return 0;
+
+      let sum = 0;
+      for (const w of waterGivenArray) {
+        if (!w) continue;
+        const wMs = toMillis(w.dateTimeStamp);
+        const cc = safeNumber(w.waterGivenCC);
+        if (!Number.isFinite(wMs) || cc === null) continue;
+        if (wMs <= sodiumTimestampMs) sum += cc;
+      }
+      return sum;
+    }
+
+    // Main transform for one patient
+    function transformPatient(patient) {
+      const p = deepClone(patient);
+
+      // 1) totalBodyWater = weightKg * 0.5
+      const weightKg = safeNumber(p.weightKg);
+      const totalBodyWater = (weightKg === null) ? null : weightKg * 0.5;
+      p.totalBodyWater = totalBodyWater;
+
+      // Guard: sodiumValues array
+      const sv = Array.isArray(p.sodiumValues) ? p.sodiumValues : [];
+      if (sv.length === 0) {
+        // Still add totalCations as null if we can't compute
+        p.totalCations = null;
+        p.sodiumValues = sv;
+        return p;
+      }
+
+      // 2) totalCations = totalBodyWater * first sodiumValue
+      const firstNa = safeNumber(sv[0]?.sodiumValue);
+      p.totalCations = (totalBodyWater === null || firstNa === null) ? null : totalBodyWater * firstNa;
+
+      // 3) For each sodiumValues object after the first:
+      for (let i = 0; i < sv.length; i++) {
+        const entry = sv[i] || {};
+        const entryMs = toMillis(entry.dateTimeStamp);
+
+        if (i === 0) {
+          entry.newTotalBodyWater = null;
+          entry.predictedSodium = null;
+          sv[i] = entry;
+          continue;
+        }
+
+        // 3a) newTotalBodyWater = totalBodyWater + any waterGivenCC up to this sodium timestamp
+        const waterSumCC = Number.isFinite(entryMs)
+          ? sumWaterUpTo(p.waterGiven, entryMs)
+          : 0;
+
+        // Convert CC → L (1000 cc = 1 L)
+        const waterSumL = waterSumCC / 1000;
+
+        const newTBW = (totalBodyWater === null) ? null : totalBodyWater + waterSumL;
+        entry.newTotalBodyWater = newTBW;
+
+        // 3b) predictedSodium = totalCations / newTotalBodyWater
+        const totalCations = safeNumber(p.totalCations);
+        entry.predictedSodium =
+          (totalCations === null || newTBW === null || newTBW === 0)
+            ? null
+            : totalCations / newTBW;
+
+        sv[i] = entry;
+      }
+
+      p.sodiumValues = sv;
+      return p;
+    }
+
+    function transformInput(data) {
+      // Accept: single patient object OR array of patient objects
+      if (Array.isArray(data)) {
+        return data.map(transformPatient);
+      }
+      if (data && typeof data === "object") {
+        return transformPatient(data);
+      }
+      throw new Error("Input must be a patient object or an array of patient objects.");
+    }
+
+    // ----------------------------
+    // UI wiring
+    // ----------------------------
+    const inputEl = document.getElementById("input");
+    const outputEl = document.getElementById("output");
+    const statusEl = document.getElementById("status");
+    const downloadBtn = document.getElementById("downloadBtn");
+
+    let latestOutputText = "";
+
+    function setStatus(msg, isError = false) {
+      statusEl.textContent = msg;
+      statusEl.classList.toggle("error", !!isError);
+    }
+
+    function process() {
+      try {
+        const raw = inputEl.value.trim();
+        if (!raw) {
+          outputEl.value = "";
+          latestOutputText = "";
+          downloadBtn.disabled = true;
+          setStatus("Please paste JSON into the input box.", true);
+          return;
+        }
+
+        const parsed = parseMaybeJSON(raw);
+        const transformed = transformInput(parsed);
+
+        latestOutputText = JSON.stringify(transformed, null, 2);
+        outputEl.value = latestOutputText;
+        downloadBtn.disabled = false;
+
+        const count = Array.isArray(transformed) ? transformed.length : 1;
+        setStatus(`Success. Processed ${count} patient${count === 1 ? "" : "s"}.`);
+      } catch (err) {
+        outputEl.value = "";
+        latestOutputText = "";
+        downloadBtn.disabled = true;
+        setStatus(`Error: ${err.message}`, true);
+      }
+    }
+
+    document.getElementById("processBtn").addEventListener("click", process);
+
+    document.getElementById("clearBtn").addEventListener("click", () => {
+      inputEl.value = "";
+      outputEl.value = "";
+      latestOutputText = "";
+      downloadBtn.disabled = true;
+      setStatus("Cleared.");
+    });
+
+    document.getElementById("copyBtn").addEventListener("click", async () => {
+      try {
+        if (!latestOutputText) {
+          setStatus("Nothing to copy yet. Click Process first.", true);
+          return;
+        }
+        await navigator.clipboard.writeText(latestOutputText);
+        setStatus("Copied output to clipboard.");
+      } catch (e) {
+        setStatus("Could not copy (clipboard permission?). You can manually select and copy from the output box.", true);
+      }
+    });
+
+    downloadBtn.addEventListener("click", () => {
+      if (!latestOutputText) {
+        setStatus("Nothing to download yet. Click Process first.", true);
+        return;
+      }
+      const blob = new Blob([latestOutputText], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      const ts = new Date();
+      const pad = (n) => String(n).padStart(2, "0");
+      const fileName =
+        `modified_patients_${ts.getFullYear()}-${pad(ts.getMonth()+1)}-${pad(ts.getDate())}_${pad(ts.getHours())}${pad(ts.getMinutes())}.json`;
+
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+
+      setStatus(`Downloaded: ${fileName}`);
+    });
+
+    document.getElementById("exampleBtn").addEventListener("click", () => {
+      const example = [
+        {
+          "name": "Patient A",
+          "age": 67,
+          "male": true,
+          "weightKg": 80,
+          "sodiumValues": [
+            { "sodiumValue": 150, "dateTimeStamp": "2026-02-02T06:00" },
+            { "sodiumValue": 148, "dateTimeStamp": "2026-02-02T10:00" },
+            { "sodiumValue": 146, "dateTimeStamp": "2026-02-02T14:00" }
+          ],
+          "waterGiven": [
+            { "waterGivenCC": 500, "dateTimeStamp": "2026-02-02T08:00" },
+            { "waterGivenCC": 250, "dateTimeStamp": "2026-02-02T13:30" }
+          ]
+        }
+      ];
+      inputEl.value = JSON.stringify(example, null, 2);
+      setStatus("Example loaded. Click Process.");
+    });
+  </script>
+</body>
+</html>
