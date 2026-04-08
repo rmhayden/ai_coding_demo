@@ -192,6 +192,23 @@
     }
     .preview-close:hover { color: #333; }
 
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      background: #e9ecef;
+      color: #333;
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .copy-btn:hover { background: #dee2e6; }
+    .copy-btn.copied { background: #d3f9d8; border-color: #8ce99a; color: #2b8a3e; }
+
     .preview-content {
       max-height: 340px;
       overflow-y: auto;
@@ -274,7 +291,10 @@
       <div class="preview-panel" id="preview-p1">
         <div class="preview-toolbar">
           <span>prompt_1.md</span>
-          <button class="preview-close" onclick="closePreview('preview-p1')" title="Close">&#10005;</button>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <button class="copy-btn" onclick="copyPreview('preview-p1', this)">&#128203; Copy</button>
+            <button class="preview-close" onclick="closePreview('preview-p1')" title="Close">&#10005;</button>
+          </div>
         </div>
         <div class="preview-content preview-loading">Loading...</div>
       </div>
@@ -289,7 +309,10 @@
       <div class="preview-panel" id="preview-p2">
         <div class="preview-toolbar">
           <span>prompt_2.md</span>
-          <button class="preview-close" onclick="closePreview('preview-p2')" title="Close">&#10005;</button>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <button class="copy-btn" onclick="copyPreview('preview-p2', this)">&#128203; Copy</button>
+            <button class="preview-close" onclick="closePreview('preview-p2')" title="Close">&#10005;</button>
+          </div>
         </div>
         <div class="preview-content preview-loading">Loading...</div>
       </div>
@@ -304,7 +327,10 @@
       <div class="preview-panel" id="preview-p3">
         <div class="preview-toolbar">
           <span>prompt_3.md</span>
-          <button class="preview-close" onclick="closePreview('preview-p3')" title="Close">&#10005;</button>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <button class="copy-btn" onclick="copyPreview('preview-p3', this)">&#128203; Copy</button>
+            <button class="preview-close" onclick="closePreview('preview-p3')" title="Close">&#10005;</button>
+          </div>
         </div>
         <div class="preview-content preview-loading">Loading...</div>
       </div>
@@ -319,7 +345,10 @@
       <div class="preview-panel" id="preview-p4">
         <div class="preview-toolbar">
           <span>prompt_4.md</span>
-          <button class="preview-close" onclick="closePreview('preview-p4')" title="Close">&#10005;</button>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <button class="copy-btn" onclick="copyPreview('preview-p4', this)">&#128203; Copy</button>
+            <button class="preview-close" onclick="closePreview('preview-p4')" title="Close">&#10005;</button>
+          </div>
         </div>
         <div class="preview-content preview-loading">Loading...</div>
       </div>
@@ -349,7 +378,10 @@
       <div class="preview-panel" id="preview-json">
         <div class="preview-toolbar">
           <span>patients_list.json</span>
-          <button class="preview-close" onclick="closePreview('preview-json')" title="Close">&#10005;</button>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <button class="copy-btn" onclick="copyPreview('preview-json', this)">&#128203; Copy</button>
+            <button class="preview-close" onclick="closePreview('preview-json')" title="Close">&#10005;</button>
+          </div>
         </div>
         <div class="preview-content preview-loading">Loading...</div>
       </div>
@@ -469,6 +501,21 @@
       panel.classList.add('visible');
       btn.innerHTML = '&#9650; Hide';
     }
+  }
+
+  function copyPreview(panelId, btn) {
+    const panel = document.getElementById(panelId);
+    const contentEl = panel.querySelector('.preview-content');
+    const text = contentEl.textContent;
+    if (!text || contentEl.classList.contains('preview-loading')) return;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.innerHTML = '&#10003; Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.innerHTML = '&#128203; Copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
   }
 
   function closePdf(panelId) {
