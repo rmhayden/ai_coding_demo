@@ -1,4 +1,4 @@
-I need a script (one single file with JavaScript and HTML that will display in a web browser) that will take a JSON (that can be copied and pasted into an input on the web browser) and perform a series of functions outlined in the below instructions to create a new modified JSON, which will show up in the web browser as well. Below is the structure of the original JSON:
+I need a script (one single file with JavaScript and HTML that will display in a web browser) that will take a JSON (that can be copied and pasted into an input on the web browser) and perform a series of functions outlined in the below instructions to create a new modified JSON, which will show up in the web browser as well. The JSON is an array of objects, such that each object is a patient. Below is the structure of the original JSON for one patient object:
 
 patient = {
   "name": String,
